@@ -1,0 +1,10 @@
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\bin\Debug\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\bin\Debug\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Debug\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Debug\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\Admin\RPGAdventurePlus\Engine\bin\Debug\Engine.dll
+C:\Users\Admin\RPGAdventurePlus\Engine\bin\Debug\Engine.pdb
+C:\Users\Admin\RPGAdventurePlus\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\Admin\RPGAdventurePlus\Engine\obj\Debug\Engine.dll
+C:\Users\Admin\RPGAdventurePlus\Engine\obj\Debug\Engine.pdb

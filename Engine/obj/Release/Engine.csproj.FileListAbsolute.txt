@@ -1,0 +1,5 @@
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\bin\Release\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\bin\Release\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Release\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Release\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\Engine\obj\Release\Engine.csprojResolveAssemblyReference.cache

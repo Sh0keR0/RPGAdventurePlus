@@ -1,0 +1,32 @@
+c:\users\admin\documents\visual studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.exe.config
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.exe
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.FormAdventurePlus.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.Properties.Resources.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.csproj.GenerateResource.Cache
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.exe
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.CharacterCreation.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.MainMenu.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.SaveFileName.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.LoadGame.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.Options.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.exe.config
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.exe
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.pdb
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.exe
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\RPGAdventurePlus.pdb
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\Engine.dll
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\bin\Debug\Engine.pdb
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.csprojResolveAssemblyReference.cache
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.CharacterCreation.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.LoadGame.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.MainMenu.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.Options.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.FormAdventurePlus.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.Properties.Resources.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.SaveFileName.resources
+C:\Users\Admin\RPGAdventurePlus\RPGAdventurePlus\obj\Debug\RPGAdventurePlus.csproj.GenerateResource.Cache

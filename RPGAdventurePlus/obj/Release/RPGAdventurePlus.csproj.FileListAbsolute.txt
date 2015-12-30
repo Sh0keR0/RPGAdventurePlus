@@ -1,0 +1,16 @@
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Release\RPGAdventurePlus.exe.config
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Release\RPGAdventurePlus.exe
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Release\RPGAdventurePlus.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Release\Engine.dll
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\bin\Release\Engine.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.FormAdventurePlus.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.Properties.Resources.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.csproj.GenerateResource.Cache
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.exe
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.pdb
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.CharacterCreation.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.MainMenu.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.SaveFileName.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.LoadGame.resources
+C:\Users\Admin\Documents\Visual Studio 2013\Projects\RPGAdventurePlus\RPGAdventurePlus\obj\Release\RPGAdventurePlus.Options.resources

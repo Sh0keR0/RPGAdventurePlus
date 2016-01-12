@@ -32,10 +32,99 @@ namespace RPGAdventurePlus
 
             _player = newPlayer;
 
+// UI databinding
+            lblHitPoints.DataBindings.Add("Text", _player, "CurrentHitPoints");
+            lblGold.DataBindings.Add("Text", _player, "Gold");
+            lblExperience.DataBindings.Add("Text", _player, "ExperiencePoints");
+            lblLevel.DataBindings.Add("Text", _player, "Level");
+            lblCurrentMana.DataBindings.Add("Text", _player, "CurrentMana");
+
+            dgvInventory.RowHeadersVisible = false;
+            dgvInventory.AutoGenerateColumns = false;
+            dgvInventory.DataSource = _player.Inventory;
+            dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Name",
+                Width = 197,
+                DataPropertyName = "Description"
+            });
+            dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Quantity",
+                DataPropertyName = "Quantity"
+
+            }
+                );
+
+            dgvQuests.RowHeadersVisible = false;
+            dgvQuests.AutoGenerateColumns = false;
+            dgvQuests.DataSource = _player.Quests;
+            dgvQuests.Columns.Add(new DataGridViewTextBoxColumn{
+                HeaderText = "Name",
+                Width = 197,
+                DataPropertyName = "Name"
+
+            });
+            dgvQuests.Columns.Add(new DataGridViewTextBoxColumn{
+                HeaderText ="Done?",
+                DataPropertyName="IsCompleted"
+            });
+
+            cboWeapons.DataSource = _player.Weapons;
+            cboWeapons.DisplayMember = "Name";
+            cboWeapons.ValueMember = "ID";
+            if(_player.CurrentWeapon != null)
+            {
+                cboWeapons.SelectedItem = _player.CurrentWeapon;
+            }
+            cboWeapons.SelectedIndexChanged += cboWeapons_SelectedIndexChanged;
+
+            cboPotions.DataSource = _player.Potions;
+            cboPotions.DisplayMember = "Name";
+            cboPotions.ValueMember = "ID";
+            if (_player.CurrentPotion != null)
+                cboPotions.SelectedItem = _player.CurrentPotion;
+
+            cboPotions.SelectedIndexChanged += cboPotions_SelectedIndexChanged;
+
+
+            cboSpells.DataSource = _player.Spells.Select(x => x.Details).ToList();
+            cboSpells.DisplayMember = "Name";
+            cboSpells.ValueMember = "ID";
+
+            _player.PropertyChanged += PlayerOnPropertyChanged;
+
+
             UpdateUI();
+
+
+
             MoveTo(_player.CurrentLocation);
 
 
+        }
+        private void PlayerOnPropertyChanged(Object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if(propertyChangedEventArgs.PropertyName == "Weapons")
+            {
+                cboWeapons.DataSource = _player.Weapons;
+                
+            }
+            if(propertyChangedEventArgs.PropertyName == "Potions")
+            {
+                cboPotions.DataSource = _player.Potions;
+                if (!_player.Potions.Any() || InCombat == false)
+                {
+                    cboPotions.Visible = false;
+                    btnUsePotion.Visible = false;
+                }
+ 
+            }
+            if(propertyChangedEventArgs.PropertyName == "Spells")
+            {
+                cboSpells.DataSource = _player.Spells.Select(x => x.Details).ToList();
+             
+            }
         }
         private void MoveTo(Location newLocation) // move the player to new location
         {
@@ -74,16 +163,6 @@ namespace RPGAdventurePlus
                             if (!_player.HasItem(qci.Details, qci.Quantity))
                             {
                                 HaveQuestItems = false;
-                                // _player.RemoveItem(GetInventoryItem(qci.Details), qci.Quantity);
-
-                                // CompleteQuest(GetPlayerQuest(newLocation.QuestAvailableHere));
-                                /* foreach (InventoryItem ii in _player.Inventory)
-                                 {
-                                     if (ii.Details.ID == qci.Details.ID)
-                                     {
-                                         _player.RemoveItem(ii, 1);
-                                     }
-                                 }*/
                             }
 
                         }
@@ -103,8 +182,9 @@ namespace RPGAdventurePlus
                 {
                     BeginBattle(newLocation.MonsterLivingHere);
                 }
-                UpdateUI();
+                
             }
+            UpdateUI();
 
         }
         private void ShowMessage(string message)
@@ -113,36 +193,55 @@ namespace RPGAdventurePlus
             rtbMessages.SelectionStart = rtbMessages.Text.Length;
             rtbMessages.ScrollToCaret();
         }
-        public void UpdateUI(bool statsOnly = false)
+        public void UpdateUI()
         {
-            if(statsOnly == false)
-            { 
+
                 btnNorth.Visible = (_player.CurrentLocation.LocationToNorth != null);
                 btnEast.Visible = (_player.CurrentLocation.LocationToEast != null);
                 btnSouth.Visible = (_player.CurrentLocation.LocationToSouth != null);
                 btnWest.Visible = (_player.CurrentLocation.LocationToWest != null);
                 rtbLocation.Text = _player.CurrentLocation.Name + Environment.NewLine;
                 rtbLocation.Text += _player.CurrentLocation.Description + Environment.NewLine;
-                RefreshPlayerInventoryList();
-                RefreshPlayerPotionsList();
-                RefreshPlayerQuestList();
-                RefreshPlayerWeaponList();
-                RefreshPlayerSpellList();
-            }
-            lblHitPoints.Font = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
-            //lblHitPoints.ForeColor = Color.Red;
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-            lblGold.Text = _player.Gold.ToString();
-            lblExperience.Text = _player.ExperiencePoints.ToString();
-            lblLevel.Text = _player.Level.ToString();
-            lblCurrentMana.Text = _player.CurrentMana.ToString();
+
+           lblHitPoints.Font = new Font(SystemFonts.DefaultFont.FontFamily, SystemFonts.DefaultFont.Size, FontStyle.Bold);
+
             rtbLocation.Text = _player.CurrentLocation.Name + Environment.NewLine;
             rtbLocation.Text += _player.CurrentLocation.Description + Environment.NewLine;
-          /*  if (InCombat == false)
-                HideCombatUI();
+
+            if (!_player.Weapons.Any() || InCombat == false)
+            {
+                cboWeapons.Visible = false;
+                btnUseWeapon.Visible = false;
+            }else
+            {
+                cboWeapons.Visible = true;
+                btnUseWeapon.Visible = true;
+            }
+
+            if (!_player.Spells.Any() || InCombat == false)
+            {
+                cboSpells.Visible = false;
+                btnUseSpell.Visible = false;
+            }else
+            {
+                cboSpells.Visible = true;
+                btnUseSpell.Visible = true;
+
+            }
+            if (!_player.Potions.Any() || InCombat == false)
+            {
+                cboPotions.Visible = false;
+                btnUsePotion.Visible = false;
+            }
             else
-                ShowCombatUI();*/
+            {
+                cboPotions.Visible = true;
+                btnUsePotion.Visible = true;
+            }
+            
+            
         }
+      
         private void RewardXP(int amount)
         {
             _player.ExperiencePoints += amount;
@@ -168,7 +267,6 @@ namespace RPGAdventurePlus
             RewardXP(quest.Details.RewardExperiencePoints);
             _player.RewardGold(quest.Details.RewardGold);
             quest.IsCompleted = true;
-            UpdateUI();
         }
         private PlayerQuest GetPlayerQuest(Quest quest)
         {
@@ -216,7 +314,6 @@ namespace RPGAdventurePlus
             }
             ShowMessage("");
             _player.Quests.Add(new PlayerQuest(quest));
-            RefreshPlayerQuestList();
         }
         private void ShowCombatUI()
         {
@@ -259,137 +356,8 @@ namespace RPGAdventurePlus
             UpdateUI();
 
         }
-        private void RefreshPlayerSpellList()
-        {
-            
-            List<Spell> spells = new List<Spell>();
-            foreach(SpellList sp in _player.Spells)
-            {
-                spells.Add(sp.Details);
-            }
 
-            if (spells.Count == 0)
-            {
-                cboSpells.Visible = false;
-                btnUseSpell.Visible = false;
-            }
-            else
-            {
 
-                cboSpells.DataSource = spells;
-
-                cboSpells.DisplayMember = "Name";
-                cboSpells.ValueMember = "ID";
-                cboSpells.Visible = true;
-                btnUseSpell.Visible = true;
-                cboSpells.SelectedIndex = 0;
-               
-            }
-        }
-        private void RefreshPlayerInventoryList()
-        {
-            dgvInventory.RowHeadersVisible = false;
-            dgvInventory.ColumnCount = 2;
-            dgvInventory.Columns[0].Name = "Name";
-            dgvInventory.Columns[0].Width = 197;
-            dgvInventory.Columns[1].Name = "Quantity";
-
-            dgvInventory.Rows.Clear();
-            foreach(InventoryItem invetoryItem in _player.Inventory)
-            {
-                if (invetoryItem.Quantity > 0)
-                    dgvInventory.Rows.Add(new[] { invetoryItem.Details.Name, invetoryItem.Quantity.ToString() });
-            }
-        }
-        private void RefreshPlayerQuestList()
-        {
-            dgvQuests.RowHeadersVisible = false;
-
-            dgvQuests.ColumnCount = 2;
-            dgvQuests.Columns[0].Name = "Name";
-            dgvQuests.Columns[0].Width = 197;
-            dgvQuests.Columns[1].Name = "Completed?";
-            dgvQuests.Rows.Clear();
-
-            foreach(PlayerQuest playerQuest in _player.Quests)
-            {
-                dgvQuests.Rows.Add(new[] { playerQuest.Details.Name, playerQuest.IsCompleted.ToString() });
-            }
-        }
-        private void RefreshPlayerWeaponList()
-        {
-            List<Weapon> weapons = new List<Weapon>();
-            foreach(InventoryItem inventoryItem in _player.Inventory)
-            {
-                if(inventoryItem.Details is Weapon)
-                {
-                    if(inventoryItem.Quantity > 0)
-                        weapons.Add((Weapon)inventoryItem.Details);
-                }
-            }
-            if (weapons.Count == 0 || InCombat == false)
-            {
-                cboWeapons.Visible = false;
-                btnUseWeapon.Visible = false;
-            }
-            else
-            {
-
-                cboWeapons.SelectedIndexChanged -= cboWeapons_SelectedIndexChanged;
-                cboWeapons.DataSource = weapons;
-                cboWeapons.SelectedIndexChanged += cboWeapons_SelectedIndexChanged;
-                cboWeapons.DisplayMember = "Name";
-                cboWeapons.ValueMember = "ID";
-                cboWeapons.Visible = true;
-                btnUseWeapon.Visible = true;
-                if (_player.CurrentWeapon != null)
-                {
-                    cboWeapons.SelectedItem = _player.CurrentWeapon;
-                }
-                else
-                {
-                    cboWeapons.SelectedIndex = 0;
-                }
-            }
-               
-            
-        }
-        private void RefreshPlayerPotionsList()
-        {
-            List<HealingPotion> healingPotions = new List<HealingPotion>();
-            foreach (InventoryItem invetoryItem in _player.Inventory)
-            {
-                if(invetoryItem.Details is HealingPotion && invetoryItem.Quantity > 0)
-                {
-                    healingPotions.Add((HealingPotion)invetoryItem.Details);
-                }
-            }
-            if(healingPotions.Count == 0 || InCombat == false)
-            {
-                cboPotions.Visible = false;
-                btnUsePotion.Visible = false;
-            }
-            else
-            {
-                btnUsePotion.Visible = true;
-                cboPotions.Visible = true;
-                cboPotions.SelectedIndexChanged -= cboPotions_SelectedIndexChanged;
-                    cboPotions.DataSource = healingPotions;
-                    cboPotions.SelectedIndexChanged += cboPotions_SelectedIndexChanged;
-                    cboPotions.DisplayMember = "Name";
-                    cboPotions.ValueMember = "ID";
-                    if (_player.CurrentPotion != null)
-                    {
-                        cboPotions.SelectedItem = _player.CurrentPotion;
-                    }
-                    else
-                    {
-                        cboPotions.SelectedIndex = 0;
-                    }
-                
-            }
-
-        }
 
         private void btnNorth_Click(object sender, EventArgs e)
         {
@@ -424,9 +392,6 @@ namespace RPGAdventurePlus
             _player.AddSpell(World.SpellByID(World.SPELL_ID_ENDURANCE));
             _player.MaximumMana = 100;
             _player.RestoreManaToFull();
-            UpdateUI();
-          //  InventoryScreen inventoryScreen = new InventoryScreen(_player);
-           // inventoryScreen.Show();
         }
         private void EndCombat(Monster monster)
         {
@@ -454,7 +419,6 @@ namespace RPGAdventurePlus
             }
             RewardXP(monster.RewardExperiencePoints);
             _player.RemoveAllBuffs();
-        //    _player.UpdateMaximumStats();
             UpdateUI();
         }
         private void CombatPhase (int Action) // 1 - attack, 2 - healing potion
@@ -478,8 +442,15 @@ namespace RPGAdventurePlus
                          //   damageDealt = (damageDealt + (_player.Level - _currentMonster.Level)) - (_currentMonster.ArmourUsed.Resistance / 2);
                             damageDealt -= _currentMonster.ArmourUsed.Resistance / 2;
                         }
-                        _currentMonster.DealDamage(damageDealt);
-                        ShowMessage("You dealt " + damageDealt.ToString() + " points of damage to " + _currentMonster.Name);
+                        if (damageDealt <= 0) 
+                        {
+                            ShowMessage("Your attack didn't do anything!");
+                        }
+                        else
+                        {
+                            _currentMonster.DealDamage(damageDealt);
+                            ShowMessage("You dealt " + damageDealt.ToString() + " points of damage to " + _currentMonster.Name);
+                        }
                     }
                 }else if(Action == 2) // use potion
                 {
@@ -502,8 +473,15 @@ namespace RPGAdventurePlus
                             {
                                 damageDealt -= _currentMonster.ArmourUsed.MagicResistance / 2;
                             }
-                            _currentMonster.DealDamage(damageDealt);
-                            ShowMessage("You dealt " + damageDealt.ToString() + " points of magic damage to the target");
+                            if(damageDealt <= 0)
+                            {
+                                ShowMessage("Your spell didn't do any damage.");
+                            }
+                            else
+                            {
+                               _currentMonster.DealDamage(damageDealt);
+                                ShowMessage("You dealt " + damageDealt.ToString() + " points of magic damage to the target");
+                            }
                         }else if(spell.EffectID == World.SPELL_EFFECT_ID_HEAL)
                         {
                             _player.Heal(spell.EffectAmount);
@@ -511,7 +489,7 @@ namespace RPGAdventurePlus
                         }else if(spell.EffectID == World.SPELL_EFFECT_ID_RESTORE_MANA)
                         {
                             _player.RestoreMana(spell.EffectAmount);
-                            ShowMessage("Your restored " + spell.EffectAmount.ToString() + " mana!");
+                            ShowMessage("You've restored " + spell.EffectAmount.ToString() + " mana!");
                         }
                         else
                         {
@@ -529,7 +507,7 @@ namespace RPGAdventurePlus
                         _player.Heal(_player.MaximumHitPoints);
                         MoveTo(_player.CurrentLocation);
                 }                
-                else
+                else // enemy turn
                 {
                     if (RandomNumber.Between(_currentMonster.Level, _currentMonster.Level + 5) -( _player.Level) <= 0)
                     {

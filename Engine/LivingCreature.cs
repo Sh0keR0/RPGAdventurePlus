@@ -3,18 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Engine
 {
-   public class LivingCreature
+    public class LivingCreature : INotifyPropertyChanged
     {
-       public int CurrentHitPoints { get; set; }
+        private int _currentHitPoints, _level, _currentMana;
+        public int CurrentHitPoints
+        {
+            get { return _currentHitPoints; }
+            set
+            {
+                _currentHitPoints = value;
+                OnPropertyChanged("CurrentHitPoints");
+            }
+        }
        public int MaximumHitPoints { get; set; }
-       public int Level { get; set; }
+       public int Level { get { return _level; }
+           set
+           {
+               _level = value;
+               OnPropertyChanged("Level");
+           }
+      
+       }
        public int Strength { get; set; }
        public int Dexterity { get; set; }
        public int Intelligent { get; set; }
-       public int CurrentMana { get; set; }
+       public int CurrentMana { get { return _currentMana; }
+           set
+           {
+               _currentMana = value;
+               OnPropertyChanged("CurrentMana");
+           }
+           }
        public int MaximumMana { get; set; }
        public Armour ArmourUsed { get; set; }
        public List<SpellList> Spells { get; set; }
@@ -37,6 +60,15 @@ namespace Engine
            TemporaryMaximumMana = 0;
            CreatureRace = race;
        }
+	
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name)); 
+        }
+
        public void DealDamage(int amount)
        {
            this.CurrentHitPoints -= amount;
@@ -54,6 +86,18 @@ namespace Engine
        {
           if(!this.HasSpell(spell))
            this.Spells.Add(new SpellList(spell));
+
+          OnPropertyChanged("Spells");
+       }
+        public void RemoveSpell(Spell spell)
+       {
+           foreach (SpellList sp in Spells)
+               if (sp.Details.ID == spell.ID)
+               {
+                   this.Spells.Remove(sp);
+                   OnPropertyChanged("Spells");
+                   break;
+               }
        }
        public void DrainMana(int amount)
        {

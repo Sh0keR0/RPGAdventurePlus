@@ -4,28 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.ComponentModel;
 namespace Engine
 {
    public class Player : LivingCreature
     {
+       private int _gold, _experincePoints;
+       public int Gold { get { return _gold; }
+           set
+           {
+               _gold = value;
+               OnPropertyChanged("Gold");
+           }
 
-       public int Gold { get; set;}
-       public int ExperiencePoints { get; set; }
+       }
+       public int ExperiencePoints { get { return _experincePoints; } 
+           set
+           {
+               _experincePoints = value;
+               OnPropertyChanged("ExperiencePoints");
+           }
+       }
      //  public int Level { get; set; }
-       public List<InventoryItem> Inventory { get; set; }
-       public List<PlayerQuest> Quests { get; set; }
+       public BindingList<InventoryItem> Inventory { get; set; }
+       public BindingList<PlayerQuest> Quests { get; set; }
        public Location CurrentLocation { get; set; }
        public Weapon CurrentWeapon { get; set; }
        public HealingPotion CurrentPotion { get; set; }
+       public List<Weapon> Weapons
+       {
+           get { return Inventory.Where(x => x.Details is Weapon).Select(x => x.Details as Weapon).ToList(); }
+       }
+       public List<HealingPotion> Potions
+       {
+           get { return Inventory.Where(x => x.Details is HealingPotion).Select(x => x.Details as HealingPotion).ToList(); }
+       }
+
 
        public Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, int level, int strength, int dexterity, int intelligent, int currentMana, int maximumMana,Race race, Armour armourUsed = null)
             : base(currentHitPoints, maximumHitPoints, level,strength, dexterity, intelligent, currentMana, maximumMana, race, armourUsed)
        {
            Gold = gold;
            ExperiencePoints = experiencePoints;
-         //  Level = level;
-           Inventory = new List<InventoryItem>();
-           Quests = new List<PlayerQuest>();
+           Inventory = new BindingList<InventoryItem>();
+           Quests = new BindingList<PlayerQuest>();
        }
 
        public static Player LoadPlayerInformationFromXml(string xmlPlayerData)
@@ -204,24 +226,25 @@ namespace Engine
            
        }
 
+       private void CallInventoryChangedEvent(Item item)
+       {
+           if (item != null)
+           {
+               if (item is Weapon)
+                   OnPropertyChanged("Weapons");
+               if (item is HealingPotion)
+                   OnPropertyChanged("Potions");
+           }
+       }
 
        public void AddItem (Item item, int quantity) // add item to the player inventory
        {
-           bool HasTheItem = false;
-           InventoryItem theitem = null;
-           foreach(InventoryItem ii in Inventory)
-           {
-               if(ii.Details.ID == item.ID)
-               {
-                   HasTheItem = true;
-                   theitem = ii;
-
-               }
-           }
-           if (HasTheItem)
+           InventoryItem theitem = Inventory.SingleOrDefault(ii => ii.Details.ID == item.ID);
+           if (theitem != null)
                theitem.Quantity += quantity;
            else
                this.Inventory.Add(new InventoryItem(item, quantity));
+           CallInventoryChangedEvent(item);
        }
 
 
@@ -229,15 +252,7 @@ namespace Engine
 
        public bool HasItem(Item item, int quantity) // check if the player has an item(s)
        {
-           foreach(InventoryItem ii in this.Inventory)
-           {
-               if (ii.Details.ID == item.ID && ii.Quantity >= quantity)
-               {
-                   return true;
-               }
-                   
-           }
-           return false;
+           return Inventory.Any(ii => ii.Details.ID == item.ID);
        }
        public void Heal(int health) 
        {
@@ -248,14 +263,7 @@ namespace Engine
        }
        public bool HasOngoingQuest(Quest quest)
        {
-           foreach(PlayerQuest playerQuest in this.Quests)
-           {
-               if(playerQuest.Details.ID == quest.ID)
-               {
-                   return true;
-               }
-           }
-           return false;
+           return this.Quests.Any(ii => ii.Details.ID == quest.ID);
        }
        public bool IsQuestCompleted(Quest quest)
        {
@@ -269,6 +277,11 @@ namespace Engine
        public void RemoveItem(InventoryItem item, int quantity)
        {
            item.Quantity -= quantity;
+           if(item.Quantity <= 0)
+           {
+               Inventory.Remove(item);
+               CallInventoryChangedEvent(item.Details);
+           }
        }
   /*     public void RewardXP(int amount)
        {
@@ -282,38 +295,10 @@ namespace Engine
        public void LevelUp()
        {
            this.Level++;
-          this.MaximumHitPoints = Level * 10;
-          // UpdateMaximumStats(); 
+          this.MaximumHitPoints += 10; 
            this.Heal(this.MaximumHitPoints);
 
        }
-       /*
-       public void UpdateMaximumStats()
-       {
-           // bugged atm
-           this.MaximumHitPoints = Level * 10;
-           bool MaximumManaBuff = false;
-           foreach(BuffsList bl in this.Buffs)
-           {
-               if(bl.Details.ID == World.BUFF_ID_INCREASE_MAX_HP)
-               {
-                   this.MaximumHitPoints += bl.Amount;
-               }else if(bl.Details.ID == World.BUFF_ID_INCREASE_MAX_MANA)
-               {
-                   this.MaximumMana += bl.Amount;
-                   this.TemporaryMaximumMana = bl.Amount;
-                   MaximumManaBuff = true;
-               }
-
-           }
-           if (MaximumManaBuff == false)
-           {
-               this.MaximumMana -= this.TemporaryMaximumMana;
-               this.TemporaryMaximumMana = 0;
-           }
-
-
-       }*/
        public void RewardGold(int amount)
        {
            this.Gold += amount;

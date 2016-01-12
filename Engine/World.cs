@@ -190,7 +190,7 @@ namespace Engine
             magican.LootTable.Add(new LootItem(ItemByID(ITEM_ID_ADVANCED_HEALING_POTION), 75, true));
             magican.Spells.Add(new SpellList(SpellByID(SPELL_ID_FIREBALL)));
             magican.Spells.Add(new SpellList(SpellByID(SPELL_ID_FROSTICE)));
-            magican.Spells.Add(new SpellList(SpellByID(SPELL_ID_HOLY_NOVA)));
+         //   magican.Spells.Add(new SpellList(SpellByID(SPELL_ID_HOLY_NOVA)));
 
             Monster deathclaw = new Monster(MONSTER_ID_DEATHCLAW, "Deathclaw", 250, 500, 1000, 250, 250,25,15,15,5,0,0,RaceByID(RACE_ID_MONSTER));
             deathclaw.LootTable.Add(new LootItem(ItemByID(ITEM_ID_DEATHCLAW_HAND), 100, true));

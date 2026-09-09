@@ -669,7 +669,7 @@ namespace RPGAdventurePlus
 
         private void FormAdventurePlus_FormClosing(object sender, FormClosingEventArgs e)
         {
-            File.WriteAllText(saveFileName, _player.toXmlString());
+            File.WriteAllText(saveFileName, _player.ToXmlString());
         }
 
     }

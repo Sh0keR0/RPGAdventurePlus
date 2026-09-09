@@ -43,7 +43,7 @@ namespace RPGAdventurePlus
             this.Close();
             try
             {
-                Player player = Player.LoadPlayerInformationFromXml(File.ReadAllText(cbSavesList.SelectedItem.ToString() + ".xml"));
+                Player player = Player.LoadFromXml(File.ReadAllText(cbSavesList.SelectedItem.ToString() + ".xml"));
                 FormAdventurePlus formAdventurePlus = new FormAdventurePlus(player, cbSavesList.SelectedItem.ToString() + ".xml");
                 formAdventurePlus.Show();
             }
